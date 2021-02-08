@@ -1,0 +1,24 @@
+A simpler and memory effiient code( it will use internal memory stack )
+
+void flatten(TreeNode* root) 
+    {      
+        if(root==NULL) return;
+        
+        flatten(root->left);
+        flatten(root->right);
+        
+        TreeNode* l = root->left ; 
+        
+        TreeNode* r = root->right;
+        
+        root->right = l;
+        
+        TreeNode* temp = root;
+        
+        while(temp->right!=NULL)
+            temp = temp->right;
+        
+        temp->right = r;
+        
+        root->left =NULL;
+    }

@@ -1,0 +1,42 @@
+class Solution {
+public:
+   vector<int> partitionLabels(string S) {
+        
+        unordered_map<char,int> mp;
+        
+        for(int i=0;i<S.size();i++)
+        {
+            mp[S[i]] = i;
+        }
+        
+        vector<int> result;
+        
+        int i = 0;
+        
+        while(i < S.size())
+        {
+            int start = i;
+            int end = mp[S[i]];
+            
+            while(start <= end)
+            {
+                int temp = mp[S[start]];
+                end = max(end, temp);
+                start++;
+            }
+            
+            result.push_back(end - i + 1);
+            i = start;
+        }
+        
+       return result;
+    }
+};
+
+// so i have found the last index of the each element and from the its starting position to the ending position i have checked for each character that if their ending index is larger then we have to go till there and after this i have calculated the size of each substrings and added it to the resultant vector and returned it as answer
+
+// ababcbacadefegdehijhklij
+
+// a - 8
+// b - 5
+// 

@@ -1,0 +1,61 @@
+class Solution {
+public:
+    
+    static bool myCompare(vector<int> a, vector<int> b)
+    {
+        if(a[0] < b[0])
+            return true;
+        
+        if(a[0] == b[0])
+        {
+            if(a[1] > b[1])
+            return true;
+        }
+        
+        return false;
+        
+    }
+    vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
+        
+        int n = people.size();
+        
+        if(n < 2)
+            return people;
+        
+        vector<vector<int>> current = people;
+        
+        vector<bool> empty(n, false);
+        
+        sort(current.begin(), current.end(), myCompare);
+        
+        for(int i=0; i<n; i++)
+        {
+            vector<int> temp = current[i];
+            
+            int find = temp[1];
+            
+            for(int j=0;j<n;j++)
+            {
+                if(empty[j] == false)
+                {
+                    if(find == 0)
+                    {
+                        empty[j] = true;
+                       people[j] = temp; 
+                        break;
+                    }
+                    
+                    else
+                    find--;
+                }
+            }
+        }
+        
+        return people;
+    }
+};
+
+//  sort it in increasing order and if the elements are same then the larger one will remain at first
+// then we will start inserting the element in the resultant vector according to the number of higher value we want before that element
+
+// copy the current vector in a new vector and then sort the new vector and we can also take a boolean vector to find which element are empty;
