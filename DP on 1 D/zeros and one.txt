@@ -1,0 +1,69 @@
+class Solution {
+public:
+    
+    int largestSubset(vector<vector<int>> arr, int size, int m, int n)
+    {
+        if(m == 0 && n == 0)
+            return 0;
+        
+        if(m < 0 || n < 0)
+            return 0;
+        
+        if( size == 0)
+            return 0;
+        
+        if(m >= arr[size-1][0] && n >= arr[size-1][1])
+        {
+            return max(1 + largestSubset(arr, size-1, m- arr[size-1][0], n - arr[size-1][1]), largestSubset(arr,size-1, m, n));
+        }
+        
+        else
+            return largestSubset(arr, size-1, m, n);
+    }
+    
+    int countZeros(string str)
+    {
+        int count = 0;
+        
+        for(int i=0;i<str.size(); i++)
+        {
+            if(str[i] == '0')
+                count++;
+        }
+        
+        return count;
+    }
+    
+    int countOne(string str)
+    {
+        int count = 0;
+        
+        for(int i=0;i<str.size(); i++)
+        {
+            if(str[i] == '1')
+                count++;
+        }
+        
+        return count;
+    }
+    
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        
+        int size = strs.size();
+        
+        vector<vector<int>> arr(size, vector<int> (2));
+        
+        for(int i=0; i<size; i++)
+        {
+            int zero = countZeros(strs[i]);
+            int one = countOne(strs[i]);
+            
+            arr[i][0] = zero;
+            arr[i][1] = one;
+        }
+        
+        return largestSubset(arr, size, m, n);
+    }
+};
+
+// 

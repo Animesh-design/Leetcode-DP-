@@ -1,0 +1,35 @@
+
+class Solution {
+public:
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        
+        int n = days.size();
+        
+        vector<int> dp(n+1, INT_MAX);
+        
+        dp[n-1] = min(costs[0], min(costs[1], costs[2]));
+        
+        dp[n] = 0;
+        
+        for(int i= n-2; i>=0; i--)
+        {
+            int i7 = i, i30 = i;
+            
+            while(i7<n && days[i7] < days[i] + 7)
+                i7++;
+            
+             while(i30<n && days[i30] < days[i] + 30)
+                i30++;
+            
+            dp[i] = min(costs[0] + dp[i+1], min(costs[1] + dp[i7], costs[2] + dp[i30]));
+        }
+        
+        return dp[0];
+    }
+};
+
+//  ALGO
+//  we are moving from the right to left
+//  for the current index we see if we can take minimum of either chossing 1 day pass + whatever we have got till dp[i+1]
+//  or we an choose 7 days pass and find the day which is less than days[i] +7 
+// or we can choose 30 days pass and add whatever we have less than the 30 days in the right
