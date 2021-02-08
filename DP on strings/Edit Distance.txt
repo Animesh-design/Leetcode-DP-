@@ -1,0 +1,44 @@
+#include <iostream>
+
+using namespace std;
+
+ int minDistanceRecur(string word1, string word2, int n, int m) {
+       
+        if(n == 0)
+        return m;
+        
+        if(m == 0)
+        return n;
+        
+        if(word1[n-1] == word2[m-1])
+        return minDistanceRecur(word1, word2, n-1, m-1);
+        
+        return 1 + min(minDistanceRecur(word1, word2, n, m-1), min(minDistanceRecur(word1, word2, n-1, m), 
+                                                                    minDistanceRecur(word1, word2, n-1, m-1)));
+    }
+    
+
+int main()
+{
+    string str1 = "intention";
+    string str2 = "execution";
+    cout<<minDistanceRecur(str1, str2, str1.size(), str2.size());
+
+    return 0;
+}
+
+// string 1 : horse
+// string 2 : ros         
+// horse -> ros
+
+// if SAME
+// ale -> ael    SAME if the character is same then we can reduce the problem to 0 + str1[1...n] and str2[1...m]
+
+// else
+// 1 +
+// le -> ale     1. INSERTION : so now we have to check from str1[0....n] and str2[1...m] (because first character have be checked)
+// ale -> le     2. DELETION : so now we have to check from str1[1....n] and str2[0...m] because first character of str1 is checked
+// ale -> ble    3. REPLACE  : so we have to check from str1[1....n] and str2[1....m] because both strings first character are checked
+
+
+
